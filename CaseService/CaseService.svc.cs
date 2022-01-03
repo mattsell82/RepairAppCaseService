@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CaseService.Dto;
+using CaseService.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -12,22 +14,34 @@ namespace CaseService
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class CaseService : ICaseService
     {
-        public string GetData(int value)
+        public CustomerDto GetCustomer(int id)
         {
-            return string.Format("You entered: {0}", value);
+            Customer customer;
+
+            using (CaseDbContext db = new CaseDbContext()) 
+            {
+                customer = db.Customers.Find(id);
+            }
+
+            CustomerDto customerDto = new CustomerDto()
+            {
+                Id = customer.Id,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                Email = customer.Email,
+                Phone = customer.Phone,
+                Address = customer.Address,
+                Zip = customer.Zip,
+                City = customer.City
+            };
+
+            return customerDto;
+
         }
 
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
+        public List<CustomerDto> GetCustomers()
         {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
+            throw new NotImplementedException();
         }
     }
 }
