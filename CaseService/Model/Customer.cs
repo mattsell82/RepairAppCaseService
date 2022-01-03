@@ -14,7 +14,7 @@ namespace CaseService.Model
         public string FirstName { get; set; }
 
         [StringLength(50)]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         [StringLength(200)]
         [Required]
@@ -25,13 +25,13 @@ namespace CaseService.Model
         public string Phone { get; set; }
 
         [StringLength(50)]
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         [StringLength(50)]
-        public string Zip { get; set; }
+        public string? Zip { get; set; }
 
         [StringLength(50)]
-        public string City { get; set; }
+        public string? City { get; set; }
 
         public List<Case> Cases { get; set; }
     }

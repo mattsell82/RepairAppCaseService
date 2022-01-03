@@ -1,6 +1,6 @@
 namespace CaseService
 {
-    using global::CaseService.Model;
+    using Model;
     using System;
     using System.Data.Entity;
     using System.Linq;

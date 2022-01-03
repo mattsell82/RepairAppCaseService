@@ -31,6 +31,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -39,6 +40,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -86,6 +88,10 @@
     <Compile Include="Migrations\202201031416105_InitialCreate.Designer.cs">
       <DependentUpon>202201031416105_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201031439187_EnabledNullableTypes.cs" />
+    <Compile Include="Migrations\202201031439187_EnabledNullableTypes.Designer.cs">
+      <DependentUpon>202201031439187_EnabledNullableTypes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Case.cs" />
     <Compile Include="Model\Customer.cs" />
@@ -95,6 +101,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202201031416105_InitialCreate.resx">
       <DependentUpon>202201031416105_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201031439187_EnabledNullableTypes.resx">
+      <DependentUpon>202201031439187_EnabledNullableTypes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
