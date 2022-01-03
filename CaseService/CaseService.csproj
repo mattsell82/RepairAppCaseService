@@ -96,12 +96,15 @@
     <Compile Include="Migrations\202201031457050_AddedQuoteTable.Designer.cs">
       <DependentUpon>202201031457050_AddedQuoteTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201031459372_AddQuotDBset.cs" />
+    <Compile Include="Migrations\202201031459372_AddQuotDBset.Designer.cs">
+      <DependentUpon>202201031459372_AddQuotDBset.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Case.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Quote.cs" />
     <Compile Include="Model\Status.cs" />
-    <Compile Include="Model\TAbleAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201031457050_AddedQuoteTable.resx">
       <DependentUpon>202201031457050_AddedQuoteTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201031459372_AddQuotDBset.resx">
+      <DependentUpon>202201031459372_AddQuotDBset.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
