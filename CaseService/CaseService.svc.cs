@@ -16,11 +16,16 @@ namespace CaseService
     {
         public CustomerDto GetCustomer(int id)
         {
-            Customer customer;
+            Customer customer = new Customer();
 
             using (CaseDbContext db = new CaseDbContext()) 
             {
                 customer = db.Customers.Find(id);
+            }
+
+            if (customer is null)
+            {
+                return null;
             }
 
             CustomerDto customerDto = new CustomerDto()
@@ -41,7 +46,25 @@ namespace CaseService
 
         public List<CustomerDto> GetCustomers()
         {
-            throw new NotImplementedException();
+            using (CaseDbContext db = new CaseDbContext())
+            {
+                var customers = db.Customers.ToList();
+
+                var customerDtos = customers.Select(customer => new CustomerDto()
+                { 
+                    Id = customer.Id,
+                    FirstName = customer.FirstName,
+                    LastName = customer.LastName,
+                    Email = customer.Email,
+                    Phone = customer.Phone,
+                    Address = customer.Address,
+                    Zip = customer.Zip,
+                    City = customer.City
+                }).ToList();
+
+                return customerDtos;
+            }
+
         }
     }
 }
