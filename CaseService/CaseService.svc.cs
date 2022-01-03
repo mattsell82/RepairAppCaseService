@@ -66,5 +66,72 @@ namespace CaseService
             }
 
         }
+
+        public void DeleteCustomer(int id) {
+
+            using (CaseDbContext db = new CaseDbContext())
+            {
+                var customer = db.Customers.Find(id);
+
+                if (customer is null)
+                {
+                    return;
+                }
+
+                db.Customers.Remove(customer);
+                db.SaveChanges();
+            }
+        }
+
+        public void CreateCustomer(CustomerDto dto) {
+
+            if (dto is null)
+            {
+                return;
+            }
+
+            Customer customer = new Customer()
+            {
+                Id = dto.Id,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                Email = dto.Email,
+                Phone = dto.Phone,
+                Address = dto.Address,
+                Zip = dto.Zip,
+                City = dto.City
+            };
+
+            using (CaseDbContext db = new CaseDbContext())
+            {
+                db.Customers.Add(customer);
+                db.SaveChanges();
+            }
+
+        }
+
+        public void EditCustomer(CustomerDto dto)
+        {
+            if (dto is null)
+            {
+                return;
+            }
+
+            using (CaseDbContext db = new CaseDbContext())
+            {
+                Customer customer = db.Customers.Find(dto.Id);
+
+                customer.FirstName = dto.FirstName;
+                customer.LastName = dto.LastName;
+                customer.Phone = dto.Phone;
+                customer.Address = dto.Address;
+                customer.Zip = dto.Zip;
+                customer.City = dto.City;
+                customer.Email = dto.Email;
+
+
+                db.SaveChanges();
+            }
+        }
     }
 }

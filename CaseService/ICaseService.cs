@@ -20,11 +20,14 @@ namespace CaseService
         [OperationContract]
         List<CustomerDto> GetCustomers();
 
-        //create customer
+        [OperationContract]
+        void DeleteCustomer(int id);
 
-        //delete customer
+        [OperationContract]
+        void CreateCustomer(CustomerDto customerDto);
 
-        //edit customer
+        [OperationContract]
+        void EditCustomer(CustomerDto customerDto);
 
     }
 
