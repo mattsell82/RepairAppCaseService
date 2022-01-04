@@ -83,11 +83,11 @@ namespace CaseService
             }
         }
 
-        public void CreateCustomer(CustomerDto dto) {
+        public int CreateCustomer(CustomerDto dto) {
 
             if (dto is null)
             {
-                return;
+                return -1;
             }
 
             Customer customer = new Customer()
@@ -106,6 +106,8 @@ namespace CaseService
             {
                 db.Customers.Add(customer);
                 db.SaveChanges();
+
+                return customer.Id;
             }
 
         }

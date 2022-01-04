@@ -24,7 +24,7 @@ namespace CaseService
         void DeleteCustomer(int id);
 
         [OperationContract]
-        void CreateCustomer(CustomerDto customerDto);
+        int CreateCustomer(CustomerDto customerDto);
 
         [OperationContract]
         void EditCustomer(CustomerDto customerDto);

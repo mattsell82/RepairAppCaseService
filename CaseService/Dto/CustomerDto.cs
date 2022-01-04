@@ -15,7 +15,7 @@ namespace CaseService.Dto
         public string FirstName { get; set; }
 
         [DataMember]
-        public string? LastName { get; set; }
+        public string LastName { get; set; }
 
         [DataMember]
         public string Email { get; set; }
@@ -24,12 +24,13 @@ namespace CaseService.Dto
         public string Phone { get; set; }
 
         [DataMember]
-        public string? Address { get; set; }
+        public string Address { get; set; }
 
         [DataMember]
-        public string? Zip { get; set; }
+        public string Zip { get; set; }
 
         [DataMember]
-        public string? City { get; set; }
+        public string City { get; set; }
+
     }
 }
