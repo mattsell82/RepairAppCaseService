@@ -13,8 +13,10 @@ namespace CaseService.Model
         [Required]
         public string FirstName { get; set; }
 
+#nullable enable
         [StringLength(50)]
         public string? LastName { get; set; }
+#nullable disable
 
         [StringLength(200)]
         [Required]
@@ -24,6 +26,7 @@ namespace CaseService.Model
         [Required]
         public string Phone { get; set; }
 
+#nullable enable
         [StringLength(50)]
         public string? Address { get; set; }
 
@@ -32,7 +35,7 @@ namespace CaseService.Model
 
         [StringLength(50)]
         public string? City { get; set; }
-
+#nullable disable
         public List<Case> Cases { get; set; }
     }
 }

@@ -83,7 +83,9 @@
     <Compile Include="CaseService.svc.cs">
       <DependentUpon>CaseService.svc</DependentUpon>
     </Compile>
+    <Compile Include="Dto\CaseDto.cs" />
     <Compile Include="Dto\CustomerDto.cs" />
+    <Compile Include="Dto\StatusDto.cs" />
     <Compile Include="ICaseService.cs" />
     <Compile Include="Migrations\202201031416105_InitialCreate.cs" />
     <Compile Include="Migrations\202201031416105_InitialCreate.Designer.cs">

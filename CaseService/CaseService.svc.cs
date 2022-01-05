@@ -2,6 +2,7 @@
 using CaseService.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -134,6 +135,91 @@ namespace CaseService
 
                 db.SaveChanges();
             }
+        }
+
+        public List<StatusDto> GetStatusList()
+        {
+            using (CaseDbContext db = new CaseDbContext())
+            {
+                var statuslist = db.Status.ToList();
+
+                var statusDtoList = statuslist.Select(s => new StatusDto { Id = s.Id, Name = s.Name }).ToList();
+
+                return statusDtoList;
+            };
+        }
+
+        public List<CaseDto> GetCases()
+        {
+            try
+            {
+                using (CaseDbContext db = new CaseDbContext())
+                {
+                    var cases = db.Cases.ToList();
+
+
+                    if (cases.Count > 0)
+                    {
+                        var caseDtos = cases.Select(c => new CaseDto 
+                        { 
+                            Id = c.Id, 
+                            StatusId = c.StatusId, 
+                            CustomerId = c.CustomerId, 
+                            DateTime = c.DateTime, 
+                            EmployeeId = c.EmployeeId, 
+                            ErrorDescription = c.ErrorDescription, 
+                            Guid = c.Guid, 
+                            ProductId = c.ProductId })
+                            .ToList();
+                        return caseDtos;
+                    }
+
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Felmeddelanded GetCases: " + e.Message);
+                Debug.WriteLine("StackTrace GetCases: " + e.StackTrace);
+                throw;
+            }
+
+
+        }
+
+
+        public void CreateCase(CaseDto caseDto)
+        {
+            Case newCase = new Case
+            {
+                CustomerId = caseDto.CustomerId,
+                DateTime = DateTime.Now,
+                EmployeeId = 1,
+                ProductId = 1,
+                StatusId = 1,
+                ErrorDescription = caseDto.ErrorDescription,
+                Guid = Guid.NewGuid()
+            };
+
+            try
+            {
+                using (CaseDbContext db = new CaseDbContext())
+                {
+                    newCase.Customer = db.Customers.Find(caseDto.CustomerId);
+                    newCase.Status = db.Status.Find(newCase.StatusId);
+
+                    db.Cases.Add(newCase);
+                    db.SaveChanges();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Felmeddelande CreateCase: " + e.Message);
+                throw;
+            }
+
+
         }
     }
 }
