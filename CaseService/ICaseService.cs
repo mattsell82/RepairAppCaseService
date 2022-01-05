@@ -29,6 +29,14 @@ namespace CaseService
         [OperationContract]
         void EditCustomer(CustomerDto customerDto);
 
+        [OperationContract]
+        List<StatusDto> GetStatusList();
+
+        [OperationContract]
+        List<CaseDto> GetCases();
+
+        [OperationContract]
+        void CreateCase(CaseDto caseDto);
     }
 
 }
