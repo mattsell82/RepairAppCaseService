@@ -187,7 +187,6 @@ namespace CaseService
 
         }
 
-
         public void CreateCase(CaseDto caseDto)
         {
             Case newCase = new Case
@@ -220,6 +219,30 @@ namespace CaseService
             }
 
 
+        }
+
+        public CaseDto GetCaseByGuid(Guid guid)
+        {
+            try
+            {
+                using (CaseDbContext db = new CaseDbContext())
+                {
+                    Case row = db.Cases.First(c => c.Guid == guid);
+
+                    CaseDto dto = new CaseDto { Id = row.Id, Guid = row.Guid, CustomerId = row.CustomerId, DateTime = row.DateTime, EmployeeId = row.EmployeeId, ErrorDescription = row.ErrorDescription, ProductId = row.ProductId, StatusId = row.StatusId };
+
+                    return dto;
+                }
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Fel GetCasesByGuid: " + e.Message);
+                Debug.WriteLine("Fel GetCasesByGuid: " + e.StackTrace);
+                throw;
+            }
+
+            
         }
     }
 }

@@ -37,6 +37,9 @@ namespace CaseService
 
         [OperationContract]
         void CreateCase(CaseDto caseDto);
+
+        [OperationContract]
+        CaseDto GetCaseByGuid(Guid guid);
     }
 
 }
