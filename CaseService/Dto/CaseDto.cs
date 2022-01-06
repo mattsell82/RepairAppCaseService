@@ -30,7 +30,7 @@ namespace CaseService.Dto
         public string ErrorDescription { get; set; }
 
         [DataMember]
-        public int StatusId { get; set; }
+        public StatusDto StatusDto { get; set; }
 
         [DataMember]
         public Guid Guid { get; set; }
