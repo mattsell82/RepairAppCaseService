@@ -38,5 +38,8 @@ namespace CaseService.Dto
         [DataMember]
         public DateTime EstimatedDeliveryDate { get; set; }
 
+        [DataMember]
+        public List<QuoteDto> QuoteDtos { get; set; }
+
     }
 }

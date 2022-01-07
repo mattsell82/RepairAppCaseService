@@ -33,5 +33,7 @@ namespace CaseService.Model
 
         public DateTime? EstimatedDeliveryDate { get; set; }
 
+        public List<Quote> Quotes { get; set; }
+
     }
 }

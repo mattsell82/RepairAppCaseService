@@ -22,5 +22,7 @@ namespace CaseService.Dto
         public bool Answered { get; set; }
         [DataMember]
         public bool Accepted { get; set; }
+        [DataMember]
+        public string Measure { get; set; }
     }
 }

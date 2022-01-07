@@ -41,9 +41,24 @@ namespace CaseService.Model
                 Accepted = quoteDto.Accepted, 
                 Answered = quoteDto.Answered, 
                 Cost = quoteDto.Cost, 
+                Measure = quoteDto.Measure,
                 DateTime = quoteDto.Created };
 
             return quote;
+        }
+
+        public static QuoteDto ToQuoteDto(Quote quote) {
+
+            QuoteDto quoteDto = new QuoteDto {
+                Id = quote.Id,
+                CaseId = quote.CaseId,
+                Created = quote.DateTime, 
+                Measure = quote.Measure, 
+                Accepted = quote.Accepted, 
+                Answered = quote.Answered, 
+                Cost = quote.Cost };
+
+            return quoteDto;
         }
     }
 }
