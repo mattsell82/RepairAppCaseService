@@ -29,20 +29,9 @@ namespace CaseService
                 return null;
             }
 
-            CustomerDto customerDto = new CustomerDto()
-            {
-                Id = customer.Id,
-                FirstName = customer.FirstName,
-                LastName = customer.LastName,
-                Email = customer.Email,
-                Phone = customer.Phone,
-                Address = customer.Address,
-                Zip = customer.Zip,
-                City = customer.City
-            };
-
+            CustomerDto customerDto = Map.CustomerToDto(customer);
+         
             return customerDto;
-
         }
 
         public List<CustomerDto> GetCustomers()
@@ -88,14 +77,14 @@ namespace CaseService
         {
             using (CaseDbContext db = new CaseDbContext())
             {
-                Case @case = db.Cases.Find(id);
+                Case test = db.Cases.Find(id);
 
-                if (@case is null)
+                if (test is null)
                 {
                     return;
                 }
 
-                db.Cases.Remove(@case);
+                db.Cases.Remove(test);
                 db.SaveChanges();
             }
         }
@@ -171,7 +160,10 @@ namespace CaseService
             {
                 using (CaseDbContext db = new CaseDbContext())
                 {
-                    var cases = db.Cases.ToList();
+                    //var cases = db.Cases.ToList();
+
+                    List<Case> cases = db.Cases.Include("Customer").Include("Status").ToList();
+
 
 
                     if (cases.Count > 0)
@@ -179,8 +171,8 @@ namespace CaseService
                         var caseDtos = cases.Select(c => new CaseDto 
                         { 
                             Id = c.Id, 
-                            StatusDto = db.Status.Select(s => new StatusDto { Id = s.Id, Name = s.Name}).First(), 
-                            CustomerId = c.CustomerId, 
+                            StatusDto = Map.StatusToDto(c.Status), 
+                            CustomerDto = Map.CustomerToDto(c.Customer),
                             DateTime = c.DateTime, 
                             EmployeeId = c.EmployeeId, 
                             ErrorDescription = c.ErrorDescription, 
@@ -207,7 +199,7 @@ namespace CaseService
         {
             Case newCase = new Case
             {
-                CustomerId = caseDto.CustomerId,
+                CustomerId = caseDto.CustomerDto.Id,
                 DateTime = DateTime.Now,
                 EmployeeId = 1,
                 ProductId = caseDto.ProductId,
@@ -220,7 +212,7 @@ namespace CaseService
             {
                 using (CaseDbContext db = new CaseDbContext())
                 {
-                    newCase.Customer = db.Customers.Find(caseDto.CustomerId);
+                    newCase.Customer = db.Customers.Find(caseDto.CustomerDto.Id);
                     newCase.Status = db.Status.Find(newCase.StatusId);
 
                     db.Cases.Add(newCase);
@@ -246,9 +238,12 @@ namespace CaseService
                     Case row = db.Cases.First(c => c.Guid == guid);
 
                     Status status = db.Status.Find(row.StatusId);
-                    StatusDto statusDto = new StatusDto { Id = status.Id, Name = status.Name };
+                    StatusDto statusDto = Map.StatusToDto(status);
 
-                    CaseDto dto = new CaseDto { Id = row.Id, Guid = row.Guid, CustomerId = row.CustomerId, DateTime = row.DateTime, EmployeeId = row.EmployeeId, ErrorDescription = row.ErrorDescription, ProductId = row.ProductId, StatusDto = statusDto};
+                    Customer customer = db.Customers.Find(row.CustomerId);
+                    CustomerDto customerDto = Map.CustomerToDto(customer);
+
+                    CaseDto dto = new CaseDto { Id = row.Id, Guid = row.Guid, CustomerDto = customerDto, DateTime = row.DateTime, EmployeeId = row.EmployeeId, ErrorDescription = row.ErrorDescription, ProductId = row.ProductId, StatusDto = statusDto};
 
                     return dto;
                 }
@@ -273,9 +268,12 @@ namespace CaseService
                     Case row = db.Cases.Find(id);
 
                     Status status = db.Status.Find(row.StatusId);
-                    StatusDto statusDto = new StatusDto { Id = status.Id, Name = status.Name };
+                    StatusDto statusDto = Map.StatusToDto(status);
 
-                    CaseDto dto = new CaseDto { Id = row.Id, Guid = row.Guid, CustomerId = row.CustomerId, DateTime = row.DateTime, EmployeeId = row.EmployeeId, ErrorDescription = row.ErrorDescription, ProductId = row.ProductId, StatusDto = statusDto };
+                    Customer customer = db.Customers.Find(row.CustomerId);
+                    CustomerDto customerDto = Map.CustomerToDto(customer);
+
+                    CaseDto dto = new CaseDto { Id = row.Id, Guid = row.Guid, CustomerDto = customerDto, DateTime = row.DateTime, EmployeeId = row.EmployeeId, ErrorDescription = row.ErrorDescription, ProductId = row.ProductId, StatusDto = statusDto };
 
                     return dto;
                 }
@@ -287,6 +285,45 @@ namespace CaseService
                 Debug.WriteLine("Fel CetCase: " + e.StackTrace);
                 throw;
             }
+        }
+
+        public void AddQuote(QuoteDto quoteDto) {
+
+            Quote quote = new Quote
+            {
+                CaseId = quoteDto.CaseId,
+                Accepted = false,
+                Answered = false,
+                Cost = quoteDto.Cost,
+                DateTime = DateTime.Now
+            };
+
+            using (CaseDbContext db = new CaseDbContext())
+            {
+                db.Quotes.Add(quote);
+                db.SaveChanges();
+            }
+        }
+
+        public void AnswerQuote(int id, bool answer) {
+
+            using (CaseDbContext db = new CaseDbContext())
+            {
+                Quote quote = db.Quotes.Find(id);
+                quote.Answered = true;
+
+                if (answer)
+                {
+                    quote.Accepted = true;
+                }
+                else
+                {
+                    quote.Accepted = false;
+                }
+
+                db.SaveChanges();
+            }
+
         }
     }
 }

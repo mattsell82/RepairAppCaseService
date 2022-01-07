@@ -33,10 +33,5 @@ namespace CaseService.Model
 
         public DateTime? EstimatedDeliveryDate { get; set; }
 
-        public Case()
-        {
-            this.DateTime = DateTime.Now;
-            this.Guid = Guid.NewGuid();
-        }
     }
 }

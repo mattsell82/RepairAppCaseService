@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="Dto\CaseDto.cs" />
     <Compile Include="Dto\CustomerDto.cs" />
+    <Compile Include="Dto\QuoteDto.cs" />
     <Compile Include="Dto\StatusDto.cs" />
     <Compile Include="ICaseService.cs" />
     <Compile Include="Migrations\202201031416105_InitialCreate.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Case.cs" />
     <Compile Include="Model\Customer.cs" />
+    <Compile Include="Model\Map.cs" />
     <Compile Include="Model\Quote.cs" />
     <Compile Include="Model\Status.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
