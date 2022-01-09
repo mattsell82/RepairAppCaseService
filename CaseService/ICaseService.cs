@@ -37,6 +37,15 @@ namespace CaseService
 
         [OperationContract]
         void CreateCase(CaseDto caseDto);
+
+        [OperationContract]
+        CaseDto GetCaseByGuid(Guid guid);
+
+        [OperationContract]
+        CaseDto GetCase(int id);
+
+        [OperationContract]
+        void DeleteCase(int id);
     }
 
 }

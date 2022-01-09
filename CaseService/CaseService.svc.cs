@@ -84,6 +84,22 @@ namespace CaseService
             }
         }
 
+        public void DeleteCase(int id)
+        {
+            using (CaseDbContext db = new CaseDbContext())
+            {
+                Case @case = db.Cases.Find(id);
+
+                if (@case is null)
+                {
+                    return;
+                }
+
+                db.Cases.Remove(@case);
+                db.SaveChanges();
+            }
+        }
+
         public int CreateCustomer(CustomerDto dto) {
 
             if (dto is null)
@@ -220,6 +236,142 @@ namespace CaseService
             }
 
 
+        }
+
+        public List<StatusDto> GetStatusList()
+        {
+            using (CaseDbContext db = new CaseDbContext())
+            {
+                var statuslist = db.Status.ToList();
+
+                var statusDtoList = statuslist.Select(s => new StatusDto { Id = s.Id, Name = s.Name }).ToList();
+
+                return statusDtoList;
+            };
+        }
+
+        public List<CaseDto> GetCases()
+        {
+            try
+            {
+                using (CaseDbContext db = new CaseDbContext())
+                {
+                    var cases = db.Cases.ToList();
+
+
+                    if (cases.Count > 0)
+                    {
+                        var caseDtos = cases.Select(c => new CaseDto 
+                        { 
+                            Id = c.Id, 
+                            StatusDto = db.Status.Select(s => new StatusDto { Id = s.Id, Name = s.Name}).First(), 
+                            CustomerId = c.CustomerId, 
+                            DateTime = c.DateTime, 
+                            EmployeeId = c.EmployeeId, 
+                            ErrorDescription = c.ErrorDescription, 
+                            Guid = c.Guid, 
+                            ProductId = c.ProductId })
+                            .ToList();
+                        return caseDtos;
+                    }
+
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Felmeddelanded GetCases: " + e.Message);
+                Debug.WriteLine("StackTrace GetCases: " + e.StackTrace);
+                throw;
+            }
+
+
+        }
+
+        public void CreateCase(CaseDto caseDto)
+        {
+            Case newCase = new Case
+            {
+                CustomerId = caseDto.CustomerId,
+                DateTime = DateTime.Now,
+                EmployeeId = 1,
+                ProductId = caseDto.ProductId,
+                StatusId = 1,
+                ErrorDescription = caseDto.ErrorDescription,
+                Guid = Guid.NewGuid()
+            };
+
+            try
+            {
+                using (CaseDbContext db = new CaseDbContext())
+                {
+                    newCase.Customer = db.Customers.Find(caseDto.CustomerId);
+                    newCase.Status = db.Status.Find(newCase.StatusId);
+
+                    db.Cases.Add(newCase);
+                    db.SaveChanges();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Felmeddelande CreateCase: " + e.Message);
+                throw;
+            }
+
+
+        }
+
+        public CaseDto GetCaseByGuid(Guid guid)
+        {
+            try
+            {
+                using (CaseDbContext db = new CaseDbContext())
+                {
+                    Case row = db.Cases.First(c => c.Guid == guid);
+
+                    Status status = db.Status.Find(row.StatusId);
+                    StatusDto statusDto = new StatusDto { Id = status.Id, Name = status.Name };
+
+                    CaseDto dto = new CaseDto { Id = row.Id, Guid = row.Guid, CustomerId = row.CustomerId, DateTime = row.DateTime, EmployeeId = row.EmployeeId, ErrorDescription = row.ErrorDescription, ProductId = row.ProductId, StatusDto = statusDto};
+
+                    return dto;
+                }
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Fel GetCasesByGuid: " + e.Message);
+                Debug.WriteLine("Fel GetCasesByGuid: " + e.StackTrace);
+                throw;
+            }
+
+            
+        }
+
+        public CaseDto GetCase(int id)
+        {
+            try
+            {
+                using (CaseDbContext db = new CaseDbContext())
+                {
+                    Case row = db.Cases.Find(id);
+
+                    Status status = db.Status.Find(row.StatusId);
+                    StatusDto statusDto = new StatusDto { Id = status.Id, Name = status.Name };
+
+                    CaseDto dto = new CaseDto { Id = row.Id, Guid = row.Guid, CustomerId = row.CustomerId, DateTime = row.DateTime, EmployeeId = row.EmployeeId, ErrorDescription = row.ErrorDescription, ProductId = row.ProductId, StatusDto = statusDto };
+
+                    return dto;
+                }
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Fel GetCase: " + e.Message);
+                Debug.WriteLine("Fel CetCase: " + e.StackTrace);
+                throw;
+            }
         }
     }
 }
