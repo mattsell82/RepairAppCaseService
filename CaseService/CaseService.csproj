@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="Dto\CaseDto.cs" />
     <Compile Include="Dto\CustomerDto.cs" />
+    <Compile Include="Dto\QuoteDto.cs" />
     <Compile Include="Dto\StatusDto.cs" />
     <Compile Include="ICaseService.cs" />
     <Compile Include="Migrations\202201031416105_InitialCreate.cs" />
@@ -103,9 +104,14 @@
     <Compile Include="Migrations\202201031459372_AddQuotDBset.Designer.cs">
       <DependentUpon>202201031459372_AddQuotDBset.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201072209114_QuoteUpdate.cs" />
+    <Compile Include="Migrations\202201072209114_QuoteUpdate.Designer.cs">
+      <DependentUpon>202201072209114_QuoteUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Case.cs" />
     <Compile Include="Model\Customer.cs" />
+    <Compile Include="Model\Map.cs" />
     <Compile Include="Model\Quote.cs" />
     <Compile Include="Model\Status.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -122,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201031459372_AddQuotDBset.resx">
       <DependentUpon>202201031459372_AddQuotDBset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201072209114_QuoteUpdate.resx">
+      <DependentUpon>202201072209114_QuoteUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

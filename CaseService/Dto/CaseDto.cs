@@ -21,7 +21,7 @@ namespace CaseService.Dto
         public DateTime DateTime { get; set; }
 
         [DataMember]
-        public int CustomerId { get; set; }
+        public CustomerDto CustomerDto { get; set; }
 
         [DataMember]
         public int ProductId { get; set; }
@@ -37,6 +37,9 @@ namespace CaseService.Dto
 
         [DataMember]
         public DateTime EstimatedDeliveryDate { get; set; }
+
+        [DataMember]
+        public List<QuoteDto> QuoteDtos { get; set; }
 
     }
 }

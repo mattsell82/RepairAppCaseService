@@ -46,6 +46,12 @@ namespace CaseService
 
         [OperationContract]
         void DeleteCase(int id);
-    }
 
+        [OperationContract]
+        void AddQuote(QuoteDto quoteDto);
+
+        [OperationContract]
+        void AnswerQuote(int id, bool answer);
+        
+    }
 }

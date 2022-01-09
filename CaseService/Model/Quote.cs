@@ -13,6 +13,7 @@ namespace CaseService.Model
         public int CaseId { get; set; }
         public Case Case { get; set; }
         public DateTime DateTime { get; set; }
+        public string Measure { get; set; }
         public double Cost { get; set; }
         public bool Answered { get; set; }
         public bool Accepted { get; set; }
