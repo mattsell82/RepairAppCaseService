@@ -164,19 +164,18 @@ namespace CaseService
 
                     List<Case> cases = db.Cases.Include("Customer").Include("Status").ToList();
 
-
-
                     if (cases.Count > 0)
                     {
-                        var caseDtos = cases.Select(c => new CaseDto 
-                        { 
-                            Id = c.Id, 
-                            StatusDto = Map.StatusToDto(c.Status), 
+                        var caseDtos = cases.Select(c => new CaseDto
+                        {
+                            Id = c.Id,
+                            StatusDto = Map.StatusToDto(c.Status),
                             CustomerDto = Map.CustomerToDto(c.Customer),
-                            DateTime = c.DateTime, 
-                            EmployeeId = c.EmployeeId, 
-                            ErrorDescription = c.ErrorDescription, 
-                            Guid = c.Guid, 
+                            DateTime = c.DateTime,
+                            EmployeeId = c.EmployeeId,
+                            EstimatedDeliveryDate = (DateTime) c.EstimatedDeliveryDate,
+                            ErrorDescription = c.ErrorDescription,
+                            Guid = c.Guid,
                             ProductId = c.ProductId })
                             .ToList();
                         return caseDtos;
@@ -203,6 +202,7 @@ namespace CaseService
                 DateTime = DateTime.Now,
                 EmployeeId = 1,
                 ProductId = caseDto.ProductId,
+                EstimatedDeliveryDate = caseDto.EstimatedDeliveryDate,
                 StatusId = 1,
                 ErrorDescription = caseDto.ErrorDescription,
                 Guid = Guid.NewGuid()
