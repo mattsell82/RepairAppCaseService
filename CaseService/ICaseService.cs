@@ -52,6 +52,8 @@ namespace CaseService
 
         [OperationContract]
         void AnswerQuote(int id, bool answer);
-        
+
+        [OperationContract]
+        void DeleteQuote(int id);
     }
 }

@@ -243,7 +243,10 @@ namespace CaseService
                     Customer customer = db.Customers.Find(row.CustomerId);
                     CustomerDto customerDto = Map.CustomerToDto(customer);
 
-                    CaseDto dto = new CaseDto { Id = row.Id, Guid = row.Guid, CustomerDto = customerDto, DateTime = row.DateTime, EmployeeId = row.EmployeeId, ErrorDescription = row.ErrorDescription, ProductId = row.ProductId, StatusDto = statusDto};
+                    List<Quote> quotes = db.Quotes.Where(q => q.CaseId == row.Id).ToList();
+                    List<QuoteDto> quoteDtos = quotes.Select(q => Map.ToQuoteDto(q)).ToList();
+
+                    CaseDto dto = new CaseDto { Id = row.Id, Guid = row.Guid, CustomerDto = customerDto, DateTime = row.DateTime, EmployeeId = row.EmployeeId, ErrorDescription = row.ErrorDescription, ProductId = row.ProductId, StatusDto = statusDto, QuoteDtos = quoteDtos};
 
                     return dto;
                 }
@@ -328,6 +331,17 @@ namespace CaseService
                 db.SaveChanges();
             }
 
+        }
+
+        public void DeleteQuote(int id) {
+            using (CaseDbContext db = new CaseDbContext())
+            {
+                var quote = db.Quotes.Find(id);
+
+                db.Quotes.Remove(quote);
+                db.SaveChanges();
+            }
+        
         }
     }
 }
