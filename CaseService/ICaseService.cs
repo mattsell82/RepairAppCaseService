@@ -55,5 +55,8 @@ namespace CaseService
 
         [OperationContract]
         void DeleteQuote(int id);
+
+        [OperationContract]
+        void EditCase(CaseDto caseDto);
     }
 }

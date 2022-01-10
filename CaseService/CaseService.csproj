@@ -108,6 +108,10 @@
     <Compile Include="Migrations\202201072209114_QuoteUpdate.Designer.cs">
       <DependentUpon>202201072209114_QuoteUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201092232459_ChangedNullability.cs" />
+    <Compile Include="Migrations\202201092232459_ChangedNullability.Designer.cs">
+      <DependentUpon>202201092232459_ChangedNullability.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Case.cs" />
     <Compile Include="Model\Customer.cs" />
@@ -131,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201072209114_QuoteUpdate.resx">
       <DependentUpon>202201072209114_QuoteUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201092232459_ChangedNullability.resx">
+      <DependentUpon>202201092232459_ChangedNullability.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

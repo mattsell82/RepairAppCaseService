@@ -142,6 +142,25 @@ namespace CaseService
             }
         }
 
+        public void EditCase(CaseDto dto)
+        {
+            if (dto is null)
+            {
+                return;
+            }
+
+            using (CaseDbContext db = new CaseDbContext())
+            {
+                Case dbCase = db.Cases.Find(dto.Id);
+
+                dbCase.Status = db.Status.Find(dto.StatusDto.Id);
+                dbCase.ErrorDescription = dto.ErrorDescription;
+                dbCase.EstimatedDeliveryDate = dto.EstimatedDeliveryDate;
+
+                db.SaveChanges();
+            }
+        }
+
         public List<StatusDto> GetStatusList()
         {
             using (CaseDbContext db = new CaseDbContext())
@@ -173,7 +192,7 @@ namespace CaseService
                             CustomerDto = Map.CustomerToDto(c.Customer),
                             DateTime = c.DateTime,
                             EmployeeId = c.EmployeeId,
-                            EstimatedDeliveryDate = (DateTime) c.EstimatedDeliveryDate,
+                            EstimatedDeliveryDate = c.EstimatedDeliveryDate,
                             ErrorDescription = c.ErrorDescription,
                             Guid = c.Guid,
                             ProductId = c.ProductId })
@@ -223,6 +242,7 @@ namespace CaseService
             catch (Exception e)
             {
                 Debug.WriteLine("Felmeddelande CreateCase: " + e.Message);
+                Debug.WriteLine("Felmeddelande CreateCase: " + e.StackTrace);
                 throw;
             }
 
@@ -246,7 +266,7 @@ namespace CaseService
                     List<Quote> quotes = db.Quotes.Where(q => q.CaseId == row.Id).ToList();
                     List<QuoteDto> quoteDtos = quotes.Select(q => Map.ToQuoteDto(q)).ToList();
 
-                    CaseDto dto = new CaseDto { Id = row.Id, Guid = row.Guid, CustomerDto = customerDto, DateTime = row.DateTime, EmployeeId = row.EmployeeId, ErrorDescription = row.ErrorDescription, ProductId = row.ProductId, StatusDto = statusDto, QuoteDtos = quoteDtos};
+                    CaseDto dto = new CaseDto { Id = row.Id, Guid = row.Guid, CustomerDto = customerDto, DateTime = row.DateTime, EmployeeId = row.EmployeeId, EstimatedDeliveryDate = row.EstimatedDeliveryDate, ErrorDescription = row.ErrorDescription, ProductId = row.ProductId, StatusDto = statusDto, QuoteDtos = quoteDtos};
 
                     return dto;
                 }
@@ -279,7 +299,7 @@ namespace CaseService
                     List<Quote> quotes = db.Quotes.Where(q => q.CaseId == id).ToList();
                     List<QuoteDto> quoteDtos = quotes.Select(q => Map.ToQuoteDto(q)).ToList();
 
-                    CaseDto dto = new CaseDto { Id = row.Id, Guid = row.Guid, CustomerDto = customerDto, DateTime = row.DateTime, EmployeeId = row.EmployeeId, ErrorDescription = row.ErrorDescription, ProductId = row.ProductId, StatusDto = statusDto, QuoteDtos = quoteDtos };
+                    CaseDto dto = new CaseDto { Id = row.Id, Guid = row.Guid, CustomerDto = customerDto, DateTime = row.DateTime, EmployeeId = row.EmployeeId, EstimatedDeliveryDate = row.EstimatedDeliveryDate, ErrorDescription = row.ErrorDescription, ProductId = row.ProductId, StatusDto = statusDto, QuoteDtos = quoteDtos };
 
                     return dto;
                 }
